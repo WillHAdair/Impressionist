@@ -18,12 +18,15 @@ Our instrumented code files are located within an **instrumented** directory con
 
 ## Testing
 
-To run the instrumented files, uncomment them out in the following html files:
+To run the testing version of this code, look under the _test/Impressionist_ folder. This will contain the instrumented version of the code. To build a new version of this (i.e test with new analyses), first delete the _Impressionist_ subfolder under the __test__ directory. You can now run this command using any analyses that jalangi2 provides or our own located within the analysis folder:
 
-* app.html
+```
+node node_modules/jalangi2/src/js/commands/instrument.js --inlineIID --inlineSource --inlineJalangi --analysis <path to analysis (with repeats)> --exclude node_modules --outputDir test --exclude test <path_to_Impressionist>
+```
 
-* alpha3/app.html
+For example, this code runs all of the linting functions available within jalangi2:
+```
+node node_modules/jalangi2/src/js/commands/instrument.js --inlineIID --inlineSource --inlineJalangi --analysis node_modules/jalangi2/src/js/sample_analyses/ChainedAnalyses.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/Utils.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/CheckNaN.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/FunCalledWithMoreArguments.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/CompareFunctionWithPrimitives.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/ShadowProtoProperty.js --analysis node_modules/jalangi2/src/js/sample_analyses/dlint/ConcatUndefinedToString.js --analysis src/js/sample_analyses/dlint/UndefinedOffset.js --outputDir test --exclude node_modules --exclude test <path_to_Impressionist>
+```
 
-* alpha3/colorpicker/index.html
-
-This will allow you to run the instrumented code files when running the `http-server` command.
+NOTE: the jalangi2 interpreter may not always recognize when to exclude the test and node_modules folders. If this happens an infinite loop is possible, as it creates subfolders indefinitely. Therefore, if you notice this behavior terminate the process, then remove the nested folders under __test/Impressionist/test__
